@@ -1,4 +1,4 @@
-import { use, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -13,6 +13,23 @@ function App() {
   const updateTodo=(id, todo)=>{
     setTodos((prev)=>prev.map((previous)=>previous.id===id? todo : previous))
   }
+
+  const deleteTodo=(id)=>{
+    setTodos((prev)=>prev.filter((todo)=>todo.id!=id))
+  }
+
+  const toggleTodo=(id)=>{
+    setTodos((prev)=> prev.map((prevTodo)=>prevTodo.id===id? {...prevTodo, commpleted: !prevTodo.completed} : prevTodo))
+
+  }
+
+  useEffect(()=>{
+
+    const todos=JSON.parse(localStorage.getItem('todos'))
+    if(todos && todos.length>0){
+      setTodos(todos)
+    }
+  }, [])
 
   
 
